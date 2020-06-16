@@ -41,17 +41,35 @@ def get_predictions():
     predictions_formatted = []
     for e in predictions:
         #print(e)
-        predictions_formatted.append("<tr><th><a href=\"{link}\">{title}</a></th><th>{score}</th></tr>".format(title=e[1], link=e[0], score=e[2]))
+        predictions_formatted.append(
+            """
+            <tr>
+                <th>
+                    <a href=\"{link}\">{title}</a>
+                </th>
+                <th> = {score}</th>
+            </tr>
+            """.format(title=e[1], link=e[0], score=e[2]))
   
     return '\n'.join(predictions_formatted), last_update
 
 @app.route('/')
 def main_page():
     preds, last_update = get_predictions()
-    return """<head><h1>Recomendador de Vídeos do Youtube</h1></head>
+    return """
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <title>Movie Recommendation</title>
+    </head>
     <body>
-    Segundos desde a última atualização: {}
+    <h1>Movie Recommendation From YouTube With Machine learning</h1>
+    <h6>Last Updated in Seconds: {}</h6>
     <table>
+        <tr>
+            <th>Video Descrition</th>
+            <th>Average Precision Score</th>
+        </tr>
              {}
     </table>
     </body>""".format((time.time_ns() - last_update) / 1e9, preds)

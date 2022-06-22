@@ -4,7 +4,7 @@ requests==2.22.0
 beautifulsoup4==4.7.1
 pandas
 joblib==0.13.2
-numpy==1.17.2
+numpy==1.22.0
 scipy
 scikit-learn
 lightgbm
